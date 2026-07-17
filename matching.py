@@ -1,9 +1,9 @@
+from text_extraction import extract_text
+from preprocessing import clean_text
+from skills import extract_skills
 from typing import List, Tuple
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
-from preprocessing import clean_text
 
 
 def compute_match_score(resume_text: str, jd_text: str) -> float:
