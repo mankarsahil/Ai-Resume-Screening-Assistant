@@ -6,10 +6,11 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC
+
 
 from preprocessing import clean_text
 
@@ -26,7 +27,24 @@ except ImportError:
     sns = None
     HAS_PLOTTING = False
 
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer # Make sure to import CountVectorizer if you use it
 
+# 1. Your text data (example)
+corpus = ["Python developer with ML experience", "Data scientist skilled in SQL"]
+
+# 2. Initialize and fit the vectorizer
+vectorizer = TfidfVectorizer()
+vectorizer.fit(corpus)
+
+# 3. ---> PASTE THE CHECK HERE <---
+if isinstance(vectorizer, (TfidfVectorizer, CountVectorizer)):
+    print(f"Success! Vectorizer trained with {len(vectorizer.vocabulary_)} features.")
+
+# 4. Save it to the pickle file
+with open('vectorizer.pkl', 'wb') as file:
+    pickle.dump(vectorizer, file)
+    
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_FILE = BASE_DIR / "UpdatedResumeDataSet.csv"
 MODEL_FILE = BASE_DIR / "model.pkl"

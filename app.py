@@ -64,11 +64,18 @@ def analyze_resume():
     }
 
     if classifier is not None:
-        predicted_category = predict_category(cleaned_resume_text)
-        if predicted_category is not None:
-            category, confidence = predicted_category
-            payload["predicted_category"] = category
-            payload["confidence"] = confidence
+        model, vectorizer = classifier
+
+        if model is not None and vectorizer is not None:
+            try:
+                category = predict_category(
+                    cleaned_resume_text,
+                    model,
+                    vectorizer
+                )
+                payload["predicted_category"] = category
+            except Exception as e:
+                payload["prediction_error"] = str(e)
 
     return jsonify(payload)
 

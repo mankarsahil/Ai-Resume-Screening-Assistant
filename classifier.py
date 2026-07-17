@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-from typing import Optional, Tuple
-
-
-def load_classifier():
-    return None
-
-
-def predict_category(text: str):
-    return None, None
-=======
 """Helpers for loading a trained resume classifier and predicting categories."""
 
 from __future__ import annotations
@@ -17,14 +6,13 @@ from pathlib import Path
 
 import joblib
 
-
 BASE_DIR = Path(__file__).resolve().parent
 MODEL_FILE = BASE_DIR / "model.pkl"
 VECTORIZER_FILE = BASE_DIR / "vectorizer.pkl"
 
 
 def load_classifier():
-    """Load the saved model and vectorizer because the live API should not train on every request."""
+    """Load the saved model and vectorizer."""
 
     if not MODEL_FILE.exists() or not VECTORIZER_FILE.exists():
         return None, None
@@ -35,7 +23,7 @@ def load_classifier():
 
 
 def predict_category(cleaned_text, model, vectorizer):
-    """Predict the resume category because the API only needs the final label, not the raw probabilities."""
+    """Predict the resume category."""
 
     if model is None or vectorizer is None:
         raise ValueError("Model and vectorizer must be loaded before prediction.")
@@ -43,4 +31,3 @@ def predict_category(cleaned_text, model, vectorizer):
     features = vectorizer.transform([cleaned_text])
     prediction = model.predict(features)
     return str(prediction[0])
->>>>>>> origin/main
